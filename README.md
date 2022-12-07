@@ -10,6 +10,7 @@ Currently using:
 - [jotai](https://jotai.org/)
 - [typescript](https://www.typescriptlang.org/)
 - [playwright](https://playwright.dev/)
+- [material ui](https://mui.com/)
 
 ## Getting Started
 
