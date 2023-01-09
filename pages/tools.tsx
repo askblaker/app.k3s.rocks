@@ -144,6 +144,7 @@ export default function Tools() {
             DEBIAN_FRONTEND=noninteractive sudo -S apt-get update && \
             DEBIAN_FRONTEND=noninteractive sudo -S apt-get upgrade -y && \
             DEBIAN_FRONTEND=noninteractive sudo -S apt-get install curl -y && \
+            DEBIAN_FRONTEND=noninteractive sudo -S apt-get install ca-certificates -y && \
             DEBIAN_FRONTEND=noninteractive sudo -S apt-get install open-iscsi -y && \
             DEBIAN_FRONTEND=noninteractive sudo -S apt-get install wireguard -y
           `);
@@ -167,7 +168,7 @@ export default function Tools() {
         sx={{ mr: 2, mt: 2 }}
         onClick={() => {
           apiCall(`
-            DEBIAN_FRONTEND=noninteractive sudo -S curl -sfL https://get.k3s.io | DEBIAN_FRONTEND=noninteractive INSTALL_K3S_VERSION=v1.21.0+k3s1 sudo -S sh -s server \
+            DEBIAN_FRONTEND=noninteractive sudo -S curl -sfL https://get.k3s.io | DEBIAN_FRONTEND=noninteractive INSTALL_K3S_VERSION=v1.25.4+k3s1 sudo -S sh -s server \
             --cluster-init \
             --flannel-backend=wireguard && \
             export KUBECONFIG=/etc/rancher/k3s/k3s.yaml && \
@@ -175,7 +176,19 @@ export default function Tools() {
           `);
         }}
       >
-        K3S Manager
+        Install K3S Manager
+      </Button>
+
+      <Button
+        variant="contained"
+        sx={{ mr: 2, mt: 2 }}
+        onClick={() => {
+          apiCall(`
+          DEBIAN_FRONTEND=noninteractive sudo -S /usr/local/bin/k3s-uninstall.sh
+        `);
+        }}
+      >
+        Uninstall K3S Manager
       </Button>
 
       <Button
