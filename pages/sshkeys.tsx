@@ -15,7 +15,6 @@ export default function Page() {
   useEffect(() => {
     const item = localStorage.getItem("sshkeys");
     if (item !== null) {
-      console.log("SETTING");
       setSSHKeys(JSON.parse(item));
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

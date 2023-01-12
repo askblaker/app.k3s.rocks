@@ -33,7 +33,6 @@ export default function Apps(props) {
     let counter = 0;
     for (let varObj of vars) {
       if (varObj.name == event.target.id) {
-        // @ts-expect-error: Not yet available in ts (https://github.com/DefinitelyTyped/DefinitelyTyped/pull/59434)
         let newVars = structuredClone(vars);
         let regex = /(\$\{.*\})/g;
         let replace = varObj.name.match(regex)[0];
@@ -183,9 +182,6 @@ export default function Apps(props) {
           <Button
             variant="contained"
             onClick={() => {
-              console.log("age: ", age);
-              console.log("vars: ", vars);
-              console.log("varMapping: ", varMapping);
               alert(getManifest());
             }}
           >

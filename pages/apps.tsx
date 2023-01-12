@@ -21,9 +21,6 @@ export default function Tools() {
 
   function getKey() {
     const key = mykeys.filter((obj) => {
-      console.log(
-        `obj.id: ${obj.id}, activeserver.usedsshkey: ${activeServer.sshkeyId}`
-      );
       return obj.id === activeServer.sshkeyId;
     })[0];
     return key.key;

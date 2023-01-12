@@ -250,7 +250,6 @@ export function ServerModal(props) {
                 >
                   {mysshkeys &&
                     mysshkeys.map((item) => {
-                      console.log(item);
                       return (
                         <MenuItem value={item.name} key={item.id}>
                           {item.name}
