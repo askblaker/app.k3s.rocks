@@ -12,6 +12,8 @@ RUN chmod 600 /home/test/.ssh/authorized_keys && chown test /home/test/.ssh/auth
 
 RUN  echo 'test:test' | chpasswd
 
+RUN echo "test ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
 EXPOSE 22
 
 CMD rsyslogd && service ssh start && tail -F /var/log/auth.log
