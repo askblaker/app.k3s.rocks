@@ -2,7 +2,7 @@ import { test } from "@playwright/test";
 import * as fs from "fs";
 
 test("E2E with SSHKey", async ({ page }) => {
-  var testKey = fs.readFileSync("./ssh_container/test", "utf-8");
+  var testKey = fs.readFileSync("../ssh_container/test", "utf-8");
   await page.goto("/sshkeys");
   await page.locator("text=add").click();
   await page.fill("#name", "testkey");
