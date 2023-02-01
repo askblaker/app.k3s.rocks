@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghost
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 2368
+  selector:
+    app: ghost
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost
+spec:
+  selector:
+    matchLabels:
+      app: ghost
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ghost
+    spec:
+      containers:
+        - name: ghost
+          image: ghost:5.32.0
+          # prettier-ignore
+          env:
+            - name: database__client
+              value: sqlite3
+            - name: database__connection__filename
+              value: content/data/ghost.db
+            - name: database__useNullAsDefault
+              value: "true"
+            - name: database__debug
+              value: "false"
+            # http://yourip/blog
+            - name: url
+              value: ${GHOST_URL}
+          ports:
+            - containerPort: 2368
+          volumeMounts:
+            - name: my-ghost-volume
+              mountPath: /var/lib/ghost/content
+      volumes:
+        - name: my-ghost-volume
+          persistentVolumeClaim:
+            claimName: ghost-pvc
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ghost-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          # /blog
+          - path: ${GHOST_INGRESS_PATH}
+            pathType: Prefix
+            backend:
+              service:
+                name: ghost
+                port:
+                  number: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ghost-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
