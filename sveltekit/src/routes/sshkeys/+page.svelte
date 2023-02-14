@@ -7,6 +7,14 @@
 	 * @param {import('$lib/types').SSHKey} key
 	 */
 	function addKey(key) {
+		const lines = key.key.split('\n');
+		let newKey = '';
+		lines.forEach((line) => {
+			if (line != '') {
+				newKey = newKey + line;
+			}
+		});
+		key.key = newKey;
 		$SSHKeyStore = [...$SSHKeyStore, key];
 	}
 
@@ -14,6 +22,14 @@
 	 * @param {import('$lib/types').SSHKey} key
 	 */
 	function updateKey(key) {
+		const lines = key.key.split('\n');
+		let newKey = '';
+		lines.forEach((line) => {
+			if (line != '') {
+				newKey = newKey + line;
+			}
+		});
+		key.key = newKey;
 		const nodes = $SSHKeyStore.map((/** @type {import('$lib/types').SSHKey} */ item) => {
 			if (item.id === key.id) {
 				return key;
